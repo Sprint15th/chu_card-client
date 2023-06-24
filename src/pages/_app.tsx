@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
 import PageTemplate from "@/components/PageTemplate";
 import "@/styles/global.css";
@@ -27,8 +28,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <PageTemplate>
-      <Component {...pageProps} />
-    </PageTemplate>
+    <RecoilRoot>
+      <PageTemplate>
+        <Component {...pageProps} />
+      </PageTemplate>
+    </RecoilRoot>
   );
 }
