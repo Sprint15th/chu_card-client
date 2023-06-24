@@ -1,46 +1,34 @@
-import { FormStateContext } from "@/context/FormStateContext";
-import { useCallback, useContext } from "react";
+import { CreateCakeState, cakeState } from "@/store/cakeState";
+import { useSetRecoilState } from "recoil";
 
 const useController = () => {
+  const setCreateCakeState = useSetRecoilState(cakeState);
 
-  const {setForm} = useContext(FormStateContext);
+  const next = () => {
+    setCreateCakeState((prev: CreateCakeState) => ({
+      ...prev,
+      selectedIndex: (prev.selectedIndex += 1),
+    }));
+  };
 
-  const next = useCallback(() => {
-    setForm(
-      (form) => {
-        ...form,
-        form.selectedIndex += 1;
-      }
-    );
-  }, [setForm]);
-   
-  const prev = useCallback(() => {
-    setForm(
-      (form) => {
-        ...form,
-        form.selectedIndex -= 1;
-      }
-    );
-  }, [setForm]);
+  const prev = () => {
+    setCreateCakeState((prev: CreateCakeState) => ({
+      ...prev,
+      selectedIndex: (prev.selectedIndex -= 1),
+    }));
+  };
 
-
-  const setSelectedIndex = useCallback(
-    (index: number) => 
-      setForm(
-        (form) => {
-          ...form,
-          form.selectedIndex = index
-        })
-      )
-    ,
-    [setForm]
-  );
+  const setSelectedIndex = (index: number) =>
+    setCreateCakeState((prev: CreateCakeState) => ({
+      ...prev,
+      selectedIndex: index,
+    }));
 
   return {
-    prev, 
+    prev,
     next,
-    setSelectedIndex
-  }
-}
+    setSelectedIndex,
+  };
+};
 
 export default useController;
