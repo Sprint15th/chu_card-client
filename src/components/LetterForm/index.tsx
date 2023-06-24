@@ -52,6 +52,7 @@ const LetterForm = () => {
     <S.Form onSubmit={handleSubmit}>
       <Letter
         letterData={letterData}
+        imagePath=''
         onChangeMessage={handleMessage}
         onChangeReceiver={handleReceiver}
         onChangeSender={handleSender}

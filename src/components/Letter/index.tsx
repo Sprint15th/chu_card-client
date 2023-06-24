@@ -1,9 +1,11 @@
 import { LetterData } from '@/types/letter';
 import styled from '@emotion/styled';
 import autoSize from '@/utils/autoSize';
+import Image from 'next/image';
 
 interface LetterProps {
   letterData: LetterData;
+  imagePath: string;
   isPreview?: boolean;
   onChangeMessage?: (value: string) => void;
   onChangeSender?: (value: string) => void;
@@ -12,6 +14,7 @@ interface LetterProps {
 
 const Letter = ({
   letterData,
+  imagePath,
   onChangeMessage = () => {},
   onChangeReceiver = () => {},
   onChangeSender = () => {},
@@ -19,7 +22,7 @@ const Letter = ({
 }: LetterProps) => {
   return (
     <S.Container>
-      <S.Cake>{/* 케이크 이미지 */}</S.Cake>
+      <Image src={imagePath} alt='cake' width='230' height='230' />
       <S.Letter>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           <p>To.</p>
@@ -72,6 +75,7 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 25px;
     width: 100%;
     min-height: 570px;
     padding: 20px;
@@ -82,12 +86,6 @@ const S = {
       border: none;
       background-color: inherit;
     }
-  `,
-  Cake: styled.div`
-    width: 230px;
-    height: 230px;
-    margin-bottom: 25px;
-    background-color: black;
   `,
   Letter: styled.div`
     display: flex;
