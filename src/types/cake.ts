@@ -1,6 +1,6 @@
-export type Color = "CHOCLATE" | "CREAM" | "BERRY";
+export type Color = "CHOCOLATE" | "CREAM" | "BERRY";
 export type Shape = "CIRCLE" | "SQUARE" | "HEART";
-export type Topping = "CHERRY" | "BERRY" | "ORGANGE" | "CHOCOLATE";
+export type Topping = "CHERRY" | "BERRY" | "ORANGE" | "CHOCOLATE";
 
 export type Appearance = {
   valid: boolean;

@@ -1,17 +1,11 @@
-import { Color, Shape, Topping } from "@/types/cake";
+import { COLOR, SHAPE, TOPPING } from "./cake";
 
 const CREATE_STEPS = [
   {
-    label: `appearance`,
-  },
-  {
-    label: `decoration`,
+    label: `cake`,
   },
   {
     label: `letter`,
-  },
-  {
-    label: `complete`,
   },
 ];
 
@@ -21,14 +15,14 @@ const CREATE_STATE = {
     appearance: {
       valid: false,
       value: {
-        color: "CHOCLATE" as Color,
-        shape: "CIRCLE" as Shape,
+        color: COLOR.CHOCOLATE,
+        shape: SHAPE.CIRCLE,
       },
     },
     decoration: {
       valid: false,
       value: {
-        topping: "CHERRY" as Topping,
+        topping: TOPPING.CHERRY,
       },
     },
     letter: {
