@@ -5,6 +5,7 @@
   font: inherit;
   color: inherit;
   flex-shrink: 0;
+  outline: none;
 }
 
 a {
