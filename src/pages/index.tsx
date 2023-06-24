@@ -9,6 +9,7 @@ const LandingPage = () => {
   const router = useRouter();
   const [initialSlide, setInitialSlide] = useState<number | null>(null);
 
+  // 첫방문 유저 캐러셀 상태 제어
   useEffect(() => {
     localStorage.getItem("isFirstVisitor")
       ? setInitialSlide(2)
@@ -34,6 +35,7 @@ const LandingPage = () => {
     { backgroundColor: "skyblue", text: "시작하기" },
   ];
 
+  // 초기 슬라이드가 설정되기 전에는 캐러셀이나 다른 컨텐츠가 렌더링 방지
   if (initialSlide === null) {
     return null;
   }
