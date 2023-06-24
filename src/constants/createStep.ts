@@ -1,18 +1,19 @@
+import { Color, Shape, Topping } from "@/types/cake";
+
 const CREATE_STEPS = [
   {
     label: `appearance`,
   },
   {
-    label: `topping`,
+    label: `decoration`,
   },
   {
     label: `letter`,
   },
-  // {
-  //   label: `complete`,
-  // },
+  {
+    label: `complete`,
+  },
 ];
-
 
 const CREATE_STATE = {
   selectedIndex: 0,
@@ -20,29 +21,25 @@ const CREATE_STATE = {
     appearance: {
       valid: false,
       value: {
-        color: 'CHOCLATE',
-        shape: 'CIRCLE',
+        color: "CHOCLATE" as Color,
+        shape: "CIRCLE" as Shape,
       },
     },
-    topping: {
+    decoration: {
       valid: false,
       value: {
-        name: 'cherry',
+        topping: "CHERRY" as Topping,
       },
     },
     letter: {
       valid: false,
       value: {
-        sender: '',
-        receiver: '',
-        message: '',
-      }
-    }
+        sender: "",
+        receiver: "",
+        message: "",
+      },
+    },
   },
 };
 
-export {
-  CREATE_STEPS,
-  CREATE_STATE
-}
-
+export { CREATE_STEPS, CREATE_STATE };

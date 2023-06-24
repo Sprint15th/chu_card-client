@@ -1,19 +1,13 @@
-import CakePreview from '@/components/CakePreview';
-import MultiStepForm from '@/components/MultiStepForm';
-import FormStateProvider from '@/context/FormStateContext';
-import React from 'react';
+import CakePreview from "@/components/CakePreview";
+import MultiStepForm from "@/components/MultiStepForm";
 
 const Cake = () => {
-
   return (
     <main>
-      <FormStateProvider>
-        <CakePreview />
-        <MultiStepForm />
-      </FormStateProvider>
+      <CakePreview />
+      <MultiStepForm />
     </main>
-  )
-}
+  );
+};
 
 export default Cake;
-
