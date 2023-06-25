@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import TopNavigationBar from '@/components/TopNavigationBar';
 import { Appearance, Decoration, Letter, Topping } from '@/types/cake';
 import { Cake } from '@/types/cake.type';
-import prisma from '@/utils/prismaClient';
+import axios from 'axios';
 
 const serializeObjectForServer = ({
   appearance,
@@ -37,13 +37,24 @@ const serializeObjectForServer = ({
   };
 };
 
-const addCake = async (data: Omit<Cake, 'cakeId' | 'createdAt'>) => {
+type CreateCakeInputs = {
+  color: 'CHOCOLATE' | 'CREAM' | 'BERRY';
+  shape: 'CIRCLE' | 'SQUARE' | 'HEART';
+  topping: 'CHERRY' | 'BERRY' | 'ORANGE' | 'CHOCOLATE';
+  sender: string; // 20자미만
+  receiver: string; // 20자미만
+  message: string; // -> 200자 미만
+};
+
+const addCake = async (values: CreateCakeInputs) => {
   try {
-    const cake = await prisma.cake.create({
-      data,
+    const {
+      data: { data },
+    } = await axios.post('/api/cake', {
+      data: values,
     });
 
-    return cake;
+    return data.cake;
   } catch (err) {
     alert(`에러가 발생했습니다!`);
   }
@@ -57,14 +68,14 @@ const Cake = () => {
 
   const handleConfirm = async () => {
     const params = serializeObjectForServer({ ...steps });
-    const { cakeId }: any = await addCake(params);
+    const cake: Cake = await addCake(params);
 
     setIsModalOpen(false);
     setShowGift(true);
 
-    if (!cakeId) return;
+    if (!cake.cakeId) return;
     setTimeout(() => {
-      router.push(`/cake/complete/${cakeId}`);
+      router.push(`/cake/complete/${cake.cakeId}`);
     }, 3000);
   };
 
