@@ -10,19 +10,60 @@ import styled from '@emotion/styled';
 import GiftBox from '@/components/GiftBox';
 import { useRouter } from 'next/navigation';
 import TopNavigationBar from '@/components/TopNavigationBar';
+import CardService from '@/services/Card.service';
+import { Appearance, Decoration, Letter, Topping } from '@/types/cake';
+import { Cake } from '@/types/cake.type';
+
+const serializeObjectForServer = ({
+  appearance,
+  decoration,
+  letter,
+}: {
+  appearance: Appearance;
+  decoration: Decoration;
+  letter: Letter;
+}) => {
+  const { color, shape } = appearance;
+  const topping = decoration.topping as Topping;
+  const { sender, receiver, message } = letter;
+
+  return {
+    color,
+    shape,
+    topping,
+    sender,
+    receiver,
+    message,
+  };
+};
+
+const addCake = async (cakeData: Omit<Cake, 'cakeId' | 'createdAt'>) => {
+  try {
+    const { data }: any = await CardService.createCard(cakeData);
+
+    return data;
+  } catch (err) {
+    console.log('err===', err);
+  }
+};
 
 const Cake = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { selectedIndex } = useRecoilValue(cakeState);
+  const { selectedIndex, steps } = useRecoilValue(cakeState);
   const [showGift, setShowGift] = useState(false);
   const router = useRouter();
 
-  const handleConfirm = () => {
-    //TODO: 서버에 저장하는 로직
+  const handleConfirm = async () => {
+    const params = serializeObjectForServer({ ...steps });
+    const { cake } = await addCake(params);
+    const { cakeId } = cake || {};
+
     setIsModalOpen(false);
     setShowGift(true);
+
+    if (!cakeId) return;
     setTimeout(() => {
-      router.push('/cake/complete/11');
+      router.push(`/cake/complete/${cakeId}`);
     }, 3000);
   };
 
