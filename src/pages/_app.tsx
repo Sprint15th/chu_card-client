@@ -1,35 +1,38 @@
 import { useEffect } from "react";
+import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
 import PageTemplate from "@/components/PageTemplate";
 import "@/styles/global.css";
 import "@/styles/swiper.css";
 
-function setScreenSize() {
-  const vh = window.innerHeight * 0.01;
-
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-}
+import { useKakaoScript } from "react-kakao-share";
 
 export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    setScreenSize();
-  }, []);
+	useResizeEventHandler();
+	useKakaoScript();
+	return (
+		<RecoilRoot>
+			<PageTemplate>
+				<Component {...pageProps} />
+			</PageTemplate>
+		</RecoilRoot>
+	);
+}
 
-  useEffect(() => {
-    const onResize = () => {
-      setScreenSize();
-    };
+const useResizeEventHandler = () => {
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		setScreenSize();
+		window.addEventListener("resize", setScreenSize);
 
-    window.addEventListener("resize", onResize);
+		return () => {
+			window.removeEventListener("resize", setScreenSize);
+		};
+	}, []);
+};
 
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
+function setScreenSize() {
+	const vh = window.innerHeight * 0.01;
 
-  return (
-    <PageTemplate>
-      <Component {...pageProps} />
-    </PageTemplate>
-  );
+	document.documentElement.style.setProperty("--vh", `${vh}px`);
 }
