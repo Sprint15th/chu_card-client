@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang='en'>
       <Head>
         <title>{'츄카드'}</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta name='viewport' content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' />
         <meta name='description' content={'추카 받고싶지않나요?'} />
         <meta property='og:title' content={'츄카드'} />
         <meta property='og:type' content='website' />
