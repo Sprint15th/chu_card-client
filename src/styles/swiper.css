@@ -48,8 +48,8 @@ body {
   border-radius: 1.688rem;
   border: 0;
   background-color: #ffe4d0;
-  font-size: 14px;
-  padding: 0.75rem 5.375rem;
+  font-size: 18px;
+  /* padding: 0.75rem 5.375rem; */
   font-family: 'Cafe24Oneprettynight';
   cursor: pointer;
 }

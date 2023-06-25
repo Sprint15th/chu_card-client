@@ -39,7 +39,7 @@ const LandingPage = () => {
 축하해주고 싶지 않나요?`,
     },
     {
-      img: '/landing/Intro2.png',
+      img: '/landing/intro2.svg',
       text: `나만의 케이크를 제작하여
 친구를 감동시켜주세요!`,
       comment: '그럼 시작해볼까요?',
