@@ -4,22 +4,6 @@ import { useRecoilState } from 'recoil';
 import { cakeState } from '@/store/cakeState';
 import { produce } from 'immer';
 
-const cake = {
-  appearance: {
-    valid: true,
-    value: {
-      color: 'CHOCOLATE',
-      shape: 'CIRCLE',
-    },
-  },
-  decoration: {
-    valid: true,
-    value: {
-      topping: 'CHERRY',
-    },
-  },
-} as const;
-
 interface LetterMakerProps {
   onDone: () => void;
 }
@@ -27,20 +11,23 @@ interface LetterMakerProps {
 const LetterMaker = ({ onDone }: LetterMakerProps) => {
   const [
     {
-      steps: { letter },
+      steps: { appearance, decoration, letter },
     },
     setCakeState,
   ] = useRecoilState(cakeState);
 
   const letterData = {
-    cake,
-    ...letter.value,
+    cake: {
+      appearance,
+      decoration,
+    },
+    ...letter,
   };
 
   const handleMessage = (value: string) => {
     setCakeState(
       produce(({ steps }) => {
-        steps.letter.value.message = value;
+        steps.letter.message = value;
       })
     );
   };
@@ -48,7 +35,7 @@ const LetterMaker = ({ onDone }: LetterMakerProps) => {
   const handleReceiver = (value: string) => {
     setCakeState(
       produce(({ steps }) => {
-        steps.letter.value.receiver = value;
+        steps.letter.receiver = value;
       })
     );
   };
@@ -56,9 +43,16 @@ const LetterMaker = ({ onDone }: LetterMakerProps) => {
   const handleSender = (value: string) => {
     setCakeState(
       produce(({ steps }) => {
-        steps.letter.value.sender = value;
+        steps.letter.sender = value;
       })
     );
+  };
+
+  const handleClick = () => {
+    if (!letterData.message || !letterData.receiver || !letterData.sender)
+      return alert('모든 항목을 입력해주세요');
+
+    onDone();
   };
 
   return (
@@ -70,7 +64,7 @@ const LetterMaker = ({ onDone }: LetterMakerProps) => {
         onChangeReceiver={handleReceiver}
         onChangeSender={handleSender}
       />
-      <S.Button onClick={onDone}>작성완료</S.Button>
+      <S.Button onClick={handleClick}>작성완료</S.Button>
     </S.Container>
   );
 };

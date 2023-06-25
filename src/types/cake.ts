@@ -3,18 +3,12 @@ export type Shape = 'CIRCLE' | 'SQUARE' | 'HEART';
 export type Topping = 'CHERRY' | 'BERRY' | 'ORANGE' | 'CHOCOLATE';
 
 export type Appearance = {
-  valid: boolean;
-  value: {
-    color: Color;
-    shape: Shape;
-  };
+  color: Color;
+  shape: Shape;
 };
 
 export type Decoration = {
-  valid: boolean;
-  value: {
-    topping: Topping;
-  };
+  topping: Topping;
 };
 
 export type Cake = {
@@ -23,10 +17,7 @@ export type Cake = {
 };
 
 export type Letter = {
-  valid: boolean;
-  value: {
-    sender: string;
-    receiver: string;
-    message: string;
-  };
+  sender: string;
+  receiver: string;
+  message: string;
 };
