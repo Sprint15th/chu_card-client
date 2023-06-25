@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import autoSize from '@/utils/autoSize';
 import Image from 'next/image';
 import type { StaticImageData } from 'next/image';
-import Heart from '../../../public/images/Circle.png';
 interface LetterProps {
   letterData: LetterData;
   imagePath: string | StaticImageData;
@@ -23,7 +22,7 @@ const Letter = ({
 }: LetterProps) => {
   return (
     <S.Container>
-      <S.Image src={Heart} alt='cake' />
+      <S.Image src={imagePath} alt='cake' />
       <S.Letter>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           <p>To.</p>
