@@ -17,7 +17,6 @@ class CardService extends ApiClient {
 			sender: "빡준", // 20자미만
 			receiver: "우지", // 20자미만
 			message: "우지 화이팅 ㅋ", // -> 200자 미만
-
 			createdAt: "1996-09-11", // yyyy-mm-dd
 		};
 	}
