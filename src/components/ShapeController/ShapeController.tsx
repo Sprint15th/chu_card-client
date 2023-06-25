@@ -3,6 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { COLOR, SHAPE } from '@/constants/cake';
 import { cakeState } from '@/store/cakeState';
 import type { Color, Shape } from '@/types/cake';
+import styled from '@emotion/styled';
 
 const getColorByShape = (shape: Shape) => {
   let color: Color;
@@ -27,7 +28,7 @@ const ShapeController = () => {
     const nextColor = getColorByShape(selectedShape);
 
     setCakeState(
-      produce((prev) => {
+      produce(prev => {
         prev.steps.appearance = {
           shape: selectedShape,
           color: nextColor,
@@ -37,14 +38,63 @@ const ShapeController = () => {
   };
 
   return (
-    <article>
-      {Object.values(SHAPE).map((shape) => (
-        <button key={shape} type='button' onClick={() => handleClick(shape)}>
-          {shape}
-        </button>
+    <Root>
+      {Object.values(SHAPE).map(shape => (
+        <Button key={shape} onClick={() => handleClick(shape)}>
+          <CakeContainer>
+            <CakeImage src={getImageSrc(shape)} alt={shape} />
+            {transelate(shape)}
+          </CakeContainer>
+        </Button>
       ))}
-    </article>
+    </Root>
   );
 };
 
 export default ShapeController;
+
+const getImageSrc = (name: (typeof SHAPE)[keyof typeof SHAPE]) => {
+  const strReplace = (str: string) =>
+    str.length === 0 ? str : str[0].toUpperCase() + str.slice(1, str.length).toLowerCase();
+
+  return `/images/${strReplace(name)}.png`;
+};
+
+const transelate = (shape: Shape) => {
+  switch (shape) {
+    case SHAPE.CIRCLE:
+      return '원';
+    case SHAPE.HEART:
+      return '하트';
+    case SHAPE.SQUARE:
+      return '사각형';
+  }
+};
+
+const Root = styled.article`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3%;
+`;
+
+const Button = styled.button`
+  margin-top: 14px;
+  background-color: #ffe4d0;
+  width: 48.5%;
+  height: 130px;
+  border-radius: 8px;
+`;
+
+const CakeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;
+
+const CakeImage = styled.img`
+  width: 46%;
+`;
