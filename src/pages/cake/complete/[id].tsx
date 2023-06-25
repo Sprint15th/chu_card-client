@@ -1,10 +1,12 @@
-import React, { HTMLAttributes, useEffect } from 'react';
+import React, { HTMLAttributes, useEffect, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { kakaoClipboard } from 'react-kakao-share';
 import styled from '@emotion/styled';
 import prisma from '@/utils/prismaClient';
+import OpenAnimation from '@/components/OpenAnimation';
+import GiftBox from '@/components/GiftBox';
 
 import { cakeState } from '@/store/cakeState';
 
@@ -25,6 +27,9 @@ type Props = {
 };
 
 export default function CakeConfirm({ initialCake, kakaoShareData }: Props) {
+  const [animationTrigger, setAnimationTrigger] = useState(0);
+  const [isOpenGift, setIsOpenGift] = useState(false);
+
   const router = useRouter();
   const setCreateCakeState = useSetRecoilState(cakeState);
   const createCakeState = initializeCreateCakeState(initialCake);
@@ -43,18 +48,36 @@ export default function CakeConfirm({ initialCake, kakaoShareData }: Props) {
   const cakeImagePath = `/images/${CAKE_PATH[`${initialCake.shape}_${initialCake.topping}`]}.png`;
 
   return (
-    <React.Fragment>
+    <>
       <Meta title={kakaoShareData.title} description={kakaoShareData.description} image={kakaoShareData.image} />
-      <Wrapper>
-        <Navigation>
-          <HomeButton onClick={() => router.push('/')} />
-        </Navigation>
-        <Letter letterData={letterData} imagePath={cakeImagePath} />
-        <ButtonContainer>
-          <Button onClick={() => kakaoClipboard(kakaoShareData)}>공유하기</Button>
-        </ButtonContainer>
-      </Wrapper>
-    </React.Fragment>
+      {animationTrigger !== 0 && <OpenAnimation key={animationTrigger} />}
+      {isOpenGift ? (
+        <React.Fragment>
+          <Wrapper>
+            <Navigation>
+              <HomeButton onClick={() => router.push('/')} />
+            </Navigation>
+            <Letter letterData={letterData} imagePath={cakeImagePath} />
+            <ButtonContainer>
+              <Button onClick={() => kakaoClipboard(kakaoShareData)}>공유하기</Button>
+            </ButtonContainer>
+          </Wrapper>
+        </React.Fragment>
+      ) : (
+        <GiftRoot>
+          <GiftBoxContainer
+            onClick={() => {
+              setAnimationTrigger(animationTrigger + 1);
+              setTimeout(() => {
+                setIsOpenGift(prev => !prev);
+              }, 500);
+            }}
+          >
+            <GiftBox text='어떤 선물이 배달 되었을까요?'></GiftBox>
+          </GiftBoxContainer>
+        </GiftRoot>
+      )}
+    </>
   );
 }
 
@@ -171,3 +194,10 @@ const HomeButton = (props: HTMLAttributes<HTMLButtonElement>) => {
     </button>
   );
 };
+
+export const GiftRoot = styled.div`
+  background-color: #ffa0a0;
+  min-height: calc(var(--vh, 1vh) * 100);
+`;
+
+export const GiftBoxContainer = styled.div``;
