@@ -1,7 +1,13 @@
-import { CreateCakeState, cakeState } from '@/store/cakeState';
-import { useSetRecoilState } from 'recoil';
+import { CREATE_STEPS } from "@/constants/createStep";
+import { CreateCakeState, cakeState } from "@/store/cakeState";
+import { useSetRecoilState } from "recoil";
 
-const useController = () => {
+export const STEP = {
+  MIN: 0,
+  MAX: CREATE_STEPS.length - 1,
+};
+
+const useStepController = () => {
   const setCreateCakeState = useSetRecoilState(cakeState);
 
   const next = () => {
@@ -31,4 +37,4 @@ const useController = () => {
   };
 };
 
-export default useController;
+export default useStepController;

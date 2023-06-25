@@ -1,13 +1,13 @@
-import useController from '@/hooks/useController';
-import styled from '@emotion/styled';
-import Image from 'next/image';
+import useStepController from "@/hooks/useStepController";
+import styled from "@emotion/styled";
+import Image from "next/image";
 
 interface TopNavigationBarProps {
   selectedIndex: number;
 }
 
 const TopNavigationBar = ({ selectedIndex }: TopNavigationBarProps) => {
-  const { prev, next } = useController();
+  const { prev, next } = useStepController();
 
   const handleLeftClick = () => {
     prev();
@@ -21,24 +21,24 @@ const TopNavigationBar = ({ selectedIndex }: TopNavigationBarProps) => {
     <S.Container>
       {selectedIndex !== 0 ? (
         <Image
-          src='/arrow_left.svg'
-          alt='left'
+          src="/arrow_left.svg"
+          alt="left"
           width={24}
           height={24}
           onClick={handleLeftClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         />
       ) : (
         <div></div>
       )}
       {selectedIndex !== 2 ? (
         <Image
-          src='/arrow_right.svg'
-          alt='right'
+          src="/arrow_right.svg"
+          alt="right"
           width={24}
           height={24}
           onClick={handleRightClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         />
       ) : (
         <div></div>
