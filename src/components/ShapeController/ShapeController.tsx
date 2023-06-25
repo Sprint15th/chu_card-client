@@ -87,6 +87,10 @@ const Button = styled.button`
   width: 48.5%;
   height: 130px;
   border-radius: 8px;
+
+  @media (max-height: 700px) {
+    height: 88px;
+  }
 `;
 
 const CakeContainer = styled.div`
@@ -99,4 +103,8 @@ const CakeContainer = styled.div`
 
 const CakeImage = styled.img`
   width: 46%;
+
+  @media (max-height: 700px) {
+    width: 26%;
+  }
 `;
