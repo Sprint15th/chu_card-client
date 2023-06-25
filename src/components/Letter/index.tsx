@@ -27,15 +27,11 @@ const Letter = ({
       <S.Letter>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           <p>To.</p>
-          <input
-            value={letterData.receiver}
-            onChange={(e) => onChangeReceiver(e.target.value)}
-            readOnly={isPreview}
-          />
+          <input value={letterData.receiver} onChange={e => onChangeReceiver(e.target.value)} readOnly={isPreview} />
         </div>
         <S.Textarea
           value={letterData.message}
-          onChange={(e) => {
+          onChange={e => {
             if (e.target.value.length > 100) return;
             onChangeMessage(e.target.value);
           }}
@@ -58,7 +54,7 @@ const Letter = ({
               minWidth: '15px',
               textAlign: 'end',
             }}
-            onChange={(e) => {
+            onChange={e => {
               if (e.target.value.length > 20) return;
               autoSize(e.target);
               onChangeSender(e.target.value);
