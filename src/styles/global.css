@@ -17,6 +17,11 @@
   font-family: 'Cafe24Oneprettynight', sans-serif;
 }
 
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
 a {
   text-decoration: none;
   color: inherit;
