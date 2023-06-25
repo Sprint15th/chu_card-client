@@ -11,6 +11,7 @@ export const COLOR = {
 
 export const SHAPE = {
   CIRCLE: "CIRCLE",
+  SQUARE: "SQUARE",
   HEART: "HEART",
 } as const;
 
