@@ -1,13 +1,13 @@
-import { COLOR, SHAPE, TOPPING } from './cake';
+import { COLOR, SHAPE, TOPPING } from "./cake";
 
 const CREATE_STEPS = [
   {
     label: `appearance`,
-    title: '케이크 모양을 선택해 주세요!',
+    title: "케이크 모양을 선택해 주세요!",
   },
   {
     label: `decoration`,
-    title: '토핑을 선택해 주세요!',
+    title: "토핑을 선택해 주세요!",
   },
   {
     label: `letter`,
@@ -22,14 +22,19 @@ const CREATE_STATE = {
       shape: SHAPE.CIRCLE,
     },
     decoration: {
-      topping: TOPPING.CHERRY,
+      topping: "",
     },
     letter: {
-      sender: '',
-      receiver: '',
-      message: '',
+      sender: "",
+      receiver: "",
+      message: "",
     },
   },
 };
 
-export { CREATE_STEPS, CREATE_STATE };
+const STEP = {
+  MIN: 0,
+  MAX: CREATE_STEPS.length - 1,
+};
+
+export { STEP, CREATE_STEPS, CREATE_STATE };

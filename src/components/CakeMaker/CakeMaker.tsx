@@ -1,7 +1,6 @@
-import React from 'react';
-import Preview from '../Preview';
-import ShapeController from '../ShapeController';
-import ToppingController from '../ToppingController/ToppingController';
+import React from "react";
+import Preview from "../Preview";
+import ShapeController from "../ShapeController";
 
 const CakeMaker = () => {
   return (
@@ -9,7 +8,6 @@ const CakeMaker = () => {
       <Preview />
       <section>
         <ShapeController />
-        <ToppingController />
       </section>
     </>
   );
