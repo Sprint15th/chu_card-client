@@ -1,61 +1,58 @@
-import CakeMaker from "@/components/CakeMaker";
-import useStepController, { STEP } from "@/hooks/useStepController";
-import { cakeState } from "@/store/cakeState";
-import { useRecoilValue } from "recoil";
+import CakeMaker from '@/components/CakeMaker';
+import ConfirmModal from '@/components/ConfirmModal';
+import DecorationMaker from '@/components/DecorationMaker';
+import LetterMaker from '@/components/LetterMaker';
+import TopNavigationBar from '@/components/TopNavigationBar';
 
-const getComponentByStep = (step: number) => {
-  switch (step) {
-    case 0:
-      return <CakeMaker />;
-    case 1:
-      return <Letter />;
-    default:
-      return <CakeMaker />;
-  }
-};
-
-interface Props {
-  children?: React.ReactNode;
-}
+import { cakeState } from '@/store/cakeState';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 const Cake = () => {
-  const { selectedIndex } = useRecoilValue(cakeState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { selectedIndex, steps } = useRecoilValue(cakeState);
+
+  const { appearance, decoration, letter } = steps;
+
+  const handleDone = () => {
+    if (!appearance.valid) {
+      alert('케이크 모양을 선택해주세요.');
+      return;
+    }
+
+    if (!decoration.valid) {
+      alert('케이크 장식을 선택해주세요.');
+      return;
+    }
+
+    if (!letter.valid) {
+      alert('케이크 메시지를 입력해주세요.');
+      return;
+    }
+
+    //TODO: 서버로 전송
+  };
+
+  const getComponentByStep = (step: number) => {
+    switch (step) {
+      case 0:
+        return <CakeMaker />;
+      case 1:
+        return <DecorationMaker />;
+      case 2:
+        return <LetterMaker onDone={handleDone} />;
+      default:
+        return <CakeMaker />;
+    }
+  };
 
   return (
-    <>
-      <StepController />
-      <Panel>{getComponentByStep(selectedIndex)}</Panel>
-    </>
+    <div style={{ padding: '16px' }}>
+      <TopNavigationBar selectedIndex={selectedIndex} />
+      <main>{getComponentByStep(selectedIndex)}</main>
+      {isModalOpen && <ConfirmModal closeModal={() => setIsModalOpen(false)} selector='' />}
+    </div>
   );
 };
 
 export default Cake;
-
-const StepController = () => {
-  const { selectedIndex } = useRecoilValue(cakeState);
-  const { next, prev } = useStepController();
-
-  const isShowLeftArrow = selectedIndex > STEP.MIN;
-  const isShowRightArrow = selectedIndex < STEP.MAX;
-
-  return (
-    <header>
-      {isShowLeftArrow && (
-        <button type="button" onClick={prev}>
-          {"<"}
-        </button>
-      )}
-      {isShowRightArrow && (
-        <button type="button" onClick={next}>
-          {">"}
-        </button>
-      )}
-    </header>
-  );
-};
-
-const Panel = ({ children }: Props) => <main>{children}</main>;
-
-const Letter = () => {
-  return <div>Letter</div>;
-};

@@ -1,11 +1,5 @@
-import { CREATE_STEPS } from "@/constants/createStep";
-import { CreateCakeState, cakeState } from "@/store/cakeState";
-import { useSetRecoilState } from "recoil";
-
-export const STEP = {
-  MIN: 0,
-  MAX: CREATE_STEPS.length - 1,
-};
+import { CreateCakeState, cakeState } from '@/store/cakeState';
+import { useSetRecoilState } from 'recoil';
 
 const useStepController = () => {
   const setCreateCakeState = useSetRecoilState(cakeState);

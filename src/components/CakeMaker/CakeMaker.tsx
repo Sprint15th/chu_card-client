@@ -1,7 +1,7 @@
-import React from "react";
-import Preview from "../Preview";
-import ShapeController from "../ShapeController";
-import ToppingController from "../ToppingController/ToppingController";
+import React from 'react';
+import Preview from '../Preview';
+import ShapeController from '../ShapeController';
+import ToppingController from '../ToppingController/ToppingController';
 
 const CakeMaker = () => {
   return (

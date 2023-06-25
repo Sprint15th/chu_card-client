@@ -1,6 +1,8 @@
 import Letter from '@/components/Letter';
-import { useState } from 'react';
 import styled from '@emotion/styled';
+import { useRecoilState } from 'recoil';
+import { cakeState } from '@/store/cakeState';
+import { produce } from 'immer';
 
 const cake = {
   appearance: {
@@ -18,38 +20,49 @@ const cake = {
   },
 } as const;
 
-const LetterForm = () => {
-  const [message, setMessage] = useState('');
-  const [sender, setSender] = useState('');
-  const [receiver, setReceiver] = useState('');
+interface LetterMakerProps {
+  onDone: () => void;
+}
+
+const LetterMaker = ({ onDone }: LetterMakerProps) => {
+  const [
+    {
+      steps: { letter },
+    },
+    setCakeState,
+  ] = useRecoilState(cakeState);
 
   const letterData = {
     cake,
-    message,
-    sender,
-    receiver,
+    ...letter.value,
   };
 
   const handleMessage = (value: string) => {
-    setMessage(value);
-  };
-
-  const handleSender = (value: string) => {
-    setSender(value);
+    setCakeState(
+      produce(({ steps }) => {
+        steps.letter.value.message = value;
+      })
+    );
   };
 
   const handleReceiver = (value: string) => {
-    setReceiver(value);
+    setCakeState(
+      produce(({ steps }) => {
+        steps.letter.value.receiver = value;
+      })
+    );
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(letterData);
-    // TODO: API 요청
+  const handleSender = (value: string) => {
+    setCakeState(
+      produce(({ steps }) => {
+        steps.letter.value.sender = value;
+      })
+    );
   };
 
   return (
-    <S.Form onSubmit={handleSubmit}>
+    <S.Container>
       <Letter
         letterData={letterData}
         imagePath=''
@@ -57,13 +70,13 @@ const LetterForm = () => {
         onChangeReceiver={handleReceiver}
         onChangeSender={handleSender}
       />
-      <S.Button type='submit'>작성완료</S.Button>
-    </S.Form>
+      <S.Button onClick={onDone}>작성완료</S.Button>
+    </S.Container>
   );
 };
 
 const S = {
-  Form: styled.form`
+  Container: styled.div`
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -81,4 +94,4 @@ const S = {
   `,
 };
 
-export default LetterForm;
+export default LetterMaker;

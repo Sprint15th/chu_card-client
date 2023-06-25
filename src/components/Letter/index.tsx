@@ -2,10 +2,11 @@ import { LetterData } from '@/types/letter';
 import styled from '@emotion/styled';
 import autoSize from '@/utils/autoSize';
 import Image from 'next/image';
+import type { StaticImageData } from 'next/image';
 
 interface LetterProps {
   letterData: LetterData;
-  imagePath: string;
+  imagePath: string | StaticImageData;
   isPreview?: boolean;
   onChangeMessage?: (value: string) => void;
   onChangeSender?: (value: string) => void;
