@@ -48,6 +48,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     user-select: none;
+    margin-bottom: 2px;
   `,
   Title: styled.h3`
     font-size: 18px;
