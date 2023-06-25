@@ -22,7 +22,7 @@ const Letter = ({
 }: LetterProps) => {
   return (
     <S.Container>
-      <S.Image src={imagePath} alt='cake' />
+      <S.Image src={imagePath} alt='cake' width={230} height={230} />
       <S.Letter>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           <p>To.</p>
