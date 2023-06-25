@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import cardService from '@/services/Card.service';
 import { useSetRecoilState } from 'recoil';
 import { cakeState } from '@/store/cakeState';
+import { CAKE_PATH } from '@/constants/cakePath';
 
 type Props = {
   initialCake: Cake;
@@ -25,7 +26,6 @@ export default function SharePage({ initialCake, kakaoShareData }: Props) {
   const [animationTrigger, setAnimationTrigger] = useState(0);
   const [isOpenGift, setIsOpenGift] = useState(false);
   const router = useRouter();
-  const setCreateCakeState = useSetRecoilState(cakeState);
   const createCakeState = initializeCreateCakeState(initialCake);
 
   const letterData = {
@@ -35,15 +35,20 @@ export default function SharePage({ initialCake, kakaoShareData }: Props) {
     receiver: initialCake.receiver,
   };
 
+  const cakeImagePath = `/images/${CAKE_PATH[`${initialCake.shape}_${initialCake.topping}`]}.png`;
+
   return (
     <>
       <Meta title={kakaoShareData.title} description={kakaoShareData.description} image={kakaoShareData.image} />
       {animationTrigger !== 0 && <OpenAnimation key={animationTrigger} />}
       {isOpenGift ? (
         <>
+          <Meta title={kakaoShareData.title} description={kakaoShareData.description} image={kakaoShareData.image} />
           <Wrapper>
-            <Navigation></Navigation>
-            <Letter letterData={letterData} imagePath={''} />
+            {/* <Navigation>
+              <HomeButton onClick={() => router.push('/')} />
+            </Navigation> */}
+            <Letter letterData={letterData} imagePath={cakeImagePath} />
             <ButtonContainer>
               <Button onClick={() => router.push('/')}>나도 쓰기</Button>
             </ButtonContainer>
@@ -112,29 +117,6 @@ const getClipData = (cake: Cake) => ({
   image: 'https://cdn.discordapp.com/attachments/1119286155356160110/1122035909295091712/image.png',
   APIKEY: process.env.NEXT_PUBLIC_KAKAO_API_KEY,
 });
-
-const getLetterData = (repo: Cake) => {
-  return {
-    cake: {
-      appearance: {
-        valid: true,
-        value: {
-          color: repo.color,
-          shape: repo.shape,
-        },
-      },
-      decoration: {
-        valid: true,
-        value: {
-          topping: repo.topping,
-        },
-      },
-    },
-    message: repo.message,
-    sender: repo.sender,
-    receiver: repo.receiver,
-  };
-};
 
 export const GiftRoot = styled.div`
   background-color: #ffa0a0;
