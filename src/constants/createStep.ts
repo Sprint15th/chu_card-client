@@ -1,4 +1,4 @@
-import { COLOR, SHAPE, TOPPING } from './cake';
+import { COLOR, SHAPE, TOPPING } from "./cake";
 
 const CREATE_STEPS = [
   {
@@ -22,14 +22,19 @@ const CREATE_STATE = {
       shape: SHAPE.CIRCLE,
     },
     decoration: {
-      topping: TOPPING.CHERRY,
+      topping: "",
     },
     letter: {
-      sender: '',
-      receiver: '',
-      message: '',
+      sender: "",
+      receiver: "",
+      message: "",
     },
   },
 };
 
-export { CREATE_STEPS, CREATE_STATE };
+const STEP = {
+  MIN: 0,
+  MAX: CREATE_STEPS.length - 1,
+};
+
+export { STEP, CREATE_STEPS, CREATE_STATE };

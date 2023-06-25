@@ -2,13 +2,14 @@ import CakeMaker from '@/components/CakeMaker';
 import ConfirmModal from '@/components/ConfirmModal';
 import DecorationMaker from '@/components/DecorationMaker';
 import LetterMaker from '@/components/LetterMaker';
-import TopNavigationBar from '@/components/TopNavigationBar';
+
 import { cakeState } from '@/store/cakeState';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from '@emotion/styled';
 import GiftBox from '@/components/GiftBox';
 import { useRouter } from 'next/navigation';
+import TopNavigationBar from '@/components/TopNavigationBar';
 
 const Cake = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,12 +1,20 @@
+import { CREATE_STEPS, STEP } from "@/constants/createStep";
 import useStepController from "@/hooks/useStepController";
+import { cakeState } from "@/store/cakeState";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
 
 interface TopNavigationBarProps {
   selectedIndex: number;
 }
 
+const isValid = (str: string) => str.length !== 0;
+
 const TopNavigationBar = ({ selectedIndex }: TopNavigationBarProps) => {
+  const {
+    steps: { decoration },
+  } = useRecoilValue(cakeState);
   const { prev, next } = useStepController();
 
   const handleLeftClick = () => {
@@ -14,12 +22,22 @@ const TopNavigationBar = ({ selectedIndex }: TopNavigationBarProps) => {
   };
 
   const handleRightClick = () => {
+    if (!isMoveNextStep()) return;
     next();
+  };
+
+  const isMoveNextStep = () => {
+    const currentStep = CREATE_STEPS[selectedIndex].label;
+
+    if (currentStep === CREATE_STEPS[1].label)
+      return isValid(decoration.topping);
+
+    return true;
   };
 
   return (
     <S.Container>
-      {selectedIndex !== 0 ? (
+      {selectedIndex !== STEP.MIN ? (
         <Image
           src="/arrow_left.svg"
           alt="left"
@@ -29,9 +47,9 @@ const TopNavigationBar = ({ selectedIndex }: TopNavigationBarProps) => {
           style={{ cursor: "pointer" }}
         />
       ) : (
-        <div></div>
+        <div />
       )}
-      {selectedIndex !== 2 ? (
+      {selectedIndex !== STEP.MAX ? (
         <Image
           src="/arrow_right.svg"
           alt="right"
@@ -41,14 +59,14 @@ const TopNavigationBar = ({ selectedIndex }: TopNavigationBarProps) => {
           style={{ cursor: "pointer" }}
         />
       ) : (
-        <div></div>
+        <div />
       )}
     </S.Container>
   );
 };
 
 const S = {
-  Container: styled.div`
+  Container: styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
