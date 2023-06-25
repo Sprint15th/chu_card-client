@@ -61,28 +61,17 @@ export default function CakeConfirm({ initialCake, kakaoShareData }: Props) {
 const initializeCreateCakeState = (initialCake: Cake) => ({
   selectedIndex: 2,
   steps: {
-    color: initialCake.color,
-    shape: initialCake.shape,
     appearance: {
-      valid: true,
-      value: {
-        color: initialCake.color,
-        shape: initialCake.shape,
-      },
+      color: initialCake.color,
+      shape: initialCake.shape,
     },
     decoration: {
-      valid: true,
-      value: {
-        topping: initialCake.topping,
-      },
+      topping: initialCake.topping,
     },
     letter: {
-      valid: true,
-      value: {
-        sender: initialCake.sender,
-        receiver: initialCake.receiver,
-        message: initialCake.message,
-      },
+      sender: initialCake.sender,
+      receiver: initialCake.receiver,
+      message: initialCake.message,
     },
   },
 });

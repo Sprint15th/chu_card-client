@@ -74,7 +74,6 @@ export default function SharePage({ initialCake, kakaoShareData }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const cake = await cardService.fetchCakeCardDetail(query.id as string);
-  console.log(cake);
 
   return {
     props: {
@@ -88,36 +87,28 @@ const initializeCreateCakeState = (initialCake: Cake) => ({
   selectedIndex: 2,
   steps: {
     appearance: {
-      valid: true,
-      value: {
-        color: initialCake.color,
-        shape: initialCake.shape,
-      },
+      color: initialCake.color,
+      shape: initialCake.shape,
     },
     decoration: {
-      valid: true,
-      value: {
-        topping: initialCake.topping,
-      },
+      topping: initialCake.topping,
     },
     letter: {
-      valid: true,
-      value: {
-        sender: initialCake.sender,
-        receiver: initialCake.receiver,
-        message: initialCake.message,
-      },
+      sender: initialCake.sender,
+      receiver: initialCake.receiver,
+      message: initialCake.message,
     },
   },
 });
 
+const GITHUB_REPO_PATH = 'https://github.com/Sprint15th/chu_card-client/blob/develop/public/images';
+
 const getClipData = (cake: Cake) => ({
-  title: `${cake.sender}님께서 ${cake.receiver}에게 축하선물를 보냈습니다.`,
+  title: `${cake.sender}님께서 ${cake.receiver}에게 축하메시지를 보냈습니다.`,
   description: cake.message,
-  image: 'https://cdn.discordapp.com/attachments/1119286155356160110/1122035909295091712/image.png',
+  image: `${GITHUB_REPO_PATH}/${CAKE_PATH[`${cake.shape}_${cake.topping}`]}.png?raw=true`,
   APIKEY: process.env.NEXT_PUBLIC_KAKAO_API_KEY,
 });
-
 export const GiftRoot = styled.div`
   background-color: #ffa0a0;
   min-height: calc(var(--vh, 1vh) * 100);
