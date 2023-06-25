@@ -3,11 +3,11 @@ import { COLOR, SHAPE, TOPPING } from "./cake";
 const CREATE_STEPS = [
   {
     label: `appearance`,
-    title: "케이크 모양을 선택해 주세요!",
+    title: '케이크 모양을 선택해 주세요!',
   },
   {
     label: `decoration`,
-    title: "토핑을 선택해 주세요!",
+    title: '토핑을 선택해 주세요!',
   },
   {
     label: `letter`,
