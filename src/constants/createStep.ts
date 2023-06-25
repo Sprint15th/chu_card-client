@@ -18,25 +18,16 @@ const CREATE_STATE = {
   selectedIndex: 0,
   steps: {
     appearance: {
-      valid: false,
-      value: {
-        color: COLOR.CHOCOLATE,
-        shape: SHAPE.CIRCLE,
-      },
+      color: COLOR.CHOCOLATE,
+      shape: SHAPE.CIRCLE,
     },
     decoration: {
-      valid: false,
-      value: {
-        topping: TOPPING.CHERRY,
-      },
+      topping: TOPPING.CHERRY,
     },
     letter: {
-      valid: false,
-      value: {
-        sender: '',
-        receiver: '',
-        message: '',
-      },
+      sender: '',
+      receiver: '',
+      message: '',
     },
   },
 };

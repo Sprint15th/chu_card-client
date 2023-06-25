@@ -1,8 +1,8 @@
-import { TOPPING } from "@/constants/cake";
-import { cakeState } from "@/store/cakeState";
-import { Topping } from "@/types/cake";
-import { produce } from "immer";
-import { useSetRecoilState } from "recoil";
+import { TOPPING } from '@/constants/cake';
+import { cakeState } from '@/store/cakeState';
+import { Topping } from '@/types/cake';
+import { produce } from 'immer';
+import { useSetRecoilState } from 'recoil';
 
 const ToppingController = () => {
   const setCakeState = useSetRecoilState(cakeState);
@@ -10,7 +10,7 @@ const ToppingController = () => {
   const handleClick = (selectedTopping: Topping) => {
     setCakeState(
       produce((prev) => {
-        prev.steps.decoration.value = {
+        prev.steps.decoration = {
           topping: selectedTopping,
         };
       })
@@ -20,11 +20,7 @@ const ToppingController = () => {
   return (
     <article>
       {Object.values(TOPPING).map((topping) => (
-        <button
-          key={topping}
-          type="button"
-          onClick={() => handleClick(topping)}
-        >
+        <button key={topping} type='button' onClick={() => handleClick(topping)}>
           {topping}
         </button>
       ))}

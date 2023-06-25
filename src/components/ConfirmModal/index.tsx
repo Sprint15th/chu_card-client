@@ -1,14 +1,14 @@
-import Modal from "@/components/Modal";
-import React from "react";
-import styled from "@emotion/styled";
+import Modal from '@/components/Modal';
+import styled from '@emotion/styled';
 
 type ConfirmModalProps = {
-  closeModal: () => void;
   selector: string;
+  closeModal: () => void;
+  onConfirm: () => void;
 };
 
 const ConfirmModal = (props: ConfirmModalProps) => {
-  const { closeModal, selector } = props;
+  const { closeModal, selector, onConfirm } = props;
 
   return (
     <Modal selector={selector} closeModal={closeModal}>
@@ -20,8 +20,8 @@ const ConfirmModal = (props: ConfirmModalProps) => {
           *작성 후, 수정할 수 없어요.
         </Alert>
         <ButtonContainer>
-          <CancelButton>취소</CancelButton>
-          <ConfirmButton>확인</ConfirmButton>
+          <CancelButton onClick={closeModal}>취소</CancelButton>
+          <ConfirmButton onClick={onConfirm}>확인</ConfirmButton>
         </ButtonContainer>
       </Root>
     </Modal>
@@ -36,7 +36,7 @@ const Root = styled.div`
   padding: 12px 14px;
   background-color: #fff;
   border-radius: 16px;
-  font-family: "Cafe24Oneprettynight";
+  font-family: 'Cafe24Oneprettynight';
 `;
 
 const Title = styled.div`

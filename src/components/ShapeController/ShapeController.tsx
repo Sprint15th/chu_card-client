@@ -1,8 +1,8 @@
-import { produce } from "immer";
-import { useSetRecoilState } from "recoil";
-import { COLOR, SHAPE } from "@/constants/cake";
-import { cakeState } from "@/store/cakeState";
-import { Color, Shape } from "@/types/cake";
+import { produce } from 'immer';
+import { useSetRecoilState } from 'recoil';
+import { COLOR, SHAPE } from '@/constants/cake';
+import { cakeState } from '@/store/cakeState';
+import type { Color, Shape } from '@/types/cake';
 
 const getColorByShape = (shape: Shape) => {
   let color: Color;
@@ -28,7 +28,7 @@ const ShapeController = () => {
 
     setCakeState(
       produce((prev) => {
-        prev.steps.appearance.value = {
+        prev.steps.appearance = {
           shape: selectedShape,
           color: nextColor,
         };
@@ -39,7 +39,7 @@ const ShapeController = () => {
   return (
     <article>
       {Object.values(SHAPE).map((shape) => (
-        <button key={shape} type="button" onClick={() => handleClick(shape)}>
+        <button key={shape} type='button' onClick={() => handleClick(shape)}>
           {shape}
         </button>
       ))}
