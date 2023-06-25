@@ -8,7 +8,7 @@ export type Appearance = {
 };
 
 export type Decoration = {
-  topping: Topping;
+  topping: Topping | null;
 };
 
 export type Cake = {
