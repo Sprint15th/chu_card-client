@@ -10,9 +10,10 @@ import { cakeState } from '@/store/cakeState';
 import Meta from '@/components/Metadata';
 import Letter from '@/components/Letter';
 
-import cardService from '@/services/Card.service';
 import type { Cake } from '@/types/cake.type';
 import { CAKE_PATH } from '@/constants/cakePath';
+
+import axios from 'axios';
 
 type Props = {
   initialCake: Cake;
@@ -76,8 +77,11 @@ const initializeCreateCakeState = (initialCake: Cake) => ({
   },
 });
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const cake = await cardService.fetchCakeCardDetail(query.id as string);
+export const getServerSideProps: GetServerSideProps = async ({ query, req }) => {
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  const result = await fetch(`${protocol}://${req?.headers.host}/api/cake/${query.id}`);
+  const { data: cake } = await result.json();
 
   return {
     props: {
