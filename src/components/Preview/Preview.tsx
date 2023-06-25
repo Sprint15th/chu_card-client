@@ -7,16 +7,15 @@ import { CREATE_STEPS } from '@/constants/createStep';
 import { Appearance, Decoration } from '@/types/cake';
 import { SHAPE } from '@/constants/cake';
 
-const strReplace = (str: string) =>
-  str.length === 0 ? str : str[0].toUpperCase() + str.slice(1, str.length).toLowerCase();
+const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
 const getImageSrc = (appearance: Appearance, decoration: Decoration) => {
   const defaultPath = (path: string) => `/images/${path}.png`;
 
-  const prefix = strReplace(appearance.shape || SHAPE.CIRCLE);
-  const topping = strReplace(decoration.topping || '');
+  const shape = capitalizeFirstLetter(appearance.shape || SHAPE.CIRCLE);
+  const topping = capitalizeFirstLetter(decoration.topping || '');
 
-  return defaultPath(`${prefix}${topping}`);
+  return defaultPath(`${shape}${topping}`);
 };
 
 const Preview = () => {
@@ -49,6 +48,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     user-select: none;
+    margin-bottom: 2px;
   `,
   Title: styled.h3`
     font-size: 18px;

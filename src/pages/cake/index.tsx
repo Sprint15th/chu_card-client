@@ -10,19 +10,72 @@ import styled from '@emotion/styled';
 import GiftBox from '@/components/GiftBox';
 import { useRouter } from 'next/navigation';
 import TopNavigationBar from '@/components/TopNavigationBar';
+import { Appearance, Decoration, Letter, Topping } from '@/types/cake';
+import { Cake } from '@/types/cake.type';
+import axios from 'axios';
+
+const serializeObjectForServer = ({
+  appearance,
+  decoration,
+  letter,
+}: {
+  appearance: Appearance;
+  decoration: Decoration;
+  letter: Letter;
+}) => {
+  const { color, shape } = appearance;
+  const topping = decoration.topping as Topping;
+  const { sender, receiver, message } = letter;
+
+  return {
+    color,
+    shape,
+    topping,
+    sender,
+    receiver,
+    message,
+  };
+};
+
+type CreateCakeInputs = {
+  color: 'CHOCOLATE' | 'CREAM' | 'BERRY';
+  shape: 'CIRCLE' | 'SQUARE' | 'HEART';
+  topping: 'CHERRY' | 'BERRY' | 'ORANGE' | 'CHOCOLATE';
+  sender: string; // 20자미만
+  receiver: string; // 20자미만
+  message: string; // -> 200자 미만
+};
+
+const addCake = async (values: CreateCakeInputs) => {
+  try {
+    const { data } = await axios.post('/api/cake', {
+      data: values,
+    });
+
+    if (!data.ok) throw new Error();
+
+    return data.data;
+  } catch (err) {
+    alert(`에러가 발생했습니다!`);
+  }
+};
 
 const Cake = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { selectedIndex } = useRecoilValue(cakeState);
+  const { selectedIndex, steps } = useRecoilValue(cakeState);
   const [showGift, setShowGift] = useState(false);
   const router = useRouter();
 
-  const handleConfirm = () => {
-    //TODO: 서버에 저장하는 로직
+  const handleConfirm = async () => {
+    const params = serializeObjectForServer({ ...steps });
+    const cake: Cake = await addCake(params);
+
     setIsModalOpen(false);
     setShowGift(true);
+
+    if (!cake.cakeId) return;
     setTimeout(() => {
-      router.push('/cake/complete/11');
+      router.push(`/cake/complete/${cake.cakeId}`);
     }, 3000);
   };
 

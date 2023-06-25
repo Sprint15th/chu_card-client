@@ -3,10 +3,23 @@ import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { cakeState } from '@/store/cakeState';
 import { produce } from 'immer';
+import { Appearance, Decoration } from '@/types/cake';
+import { SHAPE } from '@/constants/cake';
 
 interface LetterMakerProps {
   onDone: () => void;
 }
+
+const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+const getImageSrc = (appearance: Appearance, decoration: Decoration) => {
+  const defaultPath = (path: string) => `/images/${path}.png`;
+
+  const shape = capitalizeFirstLetter(appearance.shape || SHAPE.CIRCLE);
+  const topping = capitalizeFirstLetter(decoration.topping || '');
+
+  return defaultPath(`${shape}${topping}`);
+};
 
 const LetterMaker = ({ onDone }: LetterMakerProps) => {
   const [
@@ -15,6 +28,8 @@ const LetterMaker = ({ onDone }: LetterMakerProps) => {
     },
     setCakeState,
   ] = useRecoilState(cakeState);
+
+  const imgSrc = getImageSrc(appearance, decoration);
 
   const letterData = {
     cake: {
@@ -49,8 +64,7 @@ const LetterMaker = ({ onDone }: LetterMakerProps) => {
   };
 
   const handleClick = () => {
-    if (!letterData.message || !letterData.receiver || !letterData.sender)
-      return alert('모든 항목을 입력해주세요');
+    if (!letterData.message || !letterData.receiver || !letterData.sender) return alert('모든 항목을 입력해주세요');
 
     onDone();
   };
@@ -59,7 +73,7 @@ const LetterMaker = ({ onDone }: LetterMakerProps) => {
     <S.Container>
       <Letter
         letterData={letterData}
-        imagePath=''
+        imagePath={imgSrc}
         onChangeMessage={handleMessage}
         onChangeReceiver={handleReceiver}
         onChangeSender={handleSender}
@@ -73,7 +87,7 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     width: 100%;
     height: 100%;
   `,
