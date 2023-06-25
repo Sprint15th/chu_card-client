@@ -48,13 +48,13 @@ type CreateCakeInputs = {
 
 const addCake = async (values: CreateCakeInputs) => {
   try {
-    const {
-      data: { data },
-    } = await axios.post('/api/cake', {
+    const { data } = await axios.post('/api/cake', {
       data: values,
     });
 
-    return data.cake;
+    if (!data.ok) throw new Error();
+
+    return data.data;
   } catch (err) {
     alert(`에러가 발생했습니다!`);
   }
