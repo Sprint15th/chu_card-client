@@ -63,8 +63,15 @@ body {
 }
 
 .swiper-pagination {
-  margin-top: 8.438rem;
-  margin-bottom: 10.5rem;
+  top: calc(var(--vh, 1vh) * 75) !important;
+
+  @media (min-height: 768px) {
+    top: calc(var(--vh, 1vh) * 65) !important;
+  }
+
+  @media (min-height: 1100px) {
+    top: calc(var(--vh, 1vh) * 60) !important;
+  }
 }
 
 .swiper-pagination-bullet {

@@ -1,9 +1,8 @@
 @font-face {
-  font-family: "Cafe24Oneprettynight";
+  font-family: 'Cafe24Oneprettynight';
   font-weight: normal;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/Cafe24Oneprettynight/Cafe24Oneprettynight.woff2")
-    format("woff2");
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/Cafe24Oneprettynight/Cafe24Oneprettynight.woff2') format('woff2');
   font-display: swap;
 }
 
@@ -15,6 +14,7 @@
   color: inherit;
   flex-shrink: 0;
   outline: none;
+  font-family: 'Cafe24Oneprettynight', sans-serif;
 }
 
 a {
