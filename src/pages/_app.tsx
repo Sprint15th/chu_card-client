@@ -3,6 +3,7 @@ import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
 import PageTemplate from "@/components/PageTemplate";
 import "@/styles/global.css";
+import "@/styles/swiper.css";
 
 import { useKakaoScript } from "react-kakao-share";
 
