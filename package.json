@@ -17,12 +17,13 @@
 		"axios": "^1.4.0",
 		"eslint": "8.43.0",
 		"eslint-config-next": "13.4.7",
+		"framer-motion": "^10.12.17",
 		"immer": "^10.0.2",
 		"next": "13.4.7",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"recoil": "^0.7.7",
 		"react-kakao-share": "^0.4.6",
+		"recoil": "^0.7.7",
 		"typescript": "5.1.3"
 	}
 }
