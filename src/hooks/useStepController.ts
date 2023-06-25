@@ -1,20 +1,20 @@
-import { CreateCakeState, cakeState } from "@/store/cakeState";
-import { useSetRecoilState } from "recoil";
+import { CreateCakeState, cakeState } from '@/store/cakeState';
+import { useSetRecoilState } from 'recoil';
 
-const useController = () => {
+const useStepController = () => {
   const setCreateCakeState = useSetRecoilState(cakeState);
 
   const next = () => {
     setCreateCakeState((prev: CreateCakeState) => ({
       ...prev,
-      selectedIndex: (prev.selectedIndex += 1),
+      selectedIndex: prev.selectedIndex + 1,
     }));
   };
 
   const prev = () => {
     setCreateCakeState((prev: CreateCakeState) => ({
       ...prev,
-      selectedIndex: (prev.selectedIndex -= 1),
+      selectedIndex: prev.selectedIndex - 1,
     }));
   };
 
@@ -31,4 +31,4 @@ const useController = () => {
   };
 };
 
-export default useController;
+export default useStepController;

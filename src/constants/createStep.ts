@@ -1,17 +1,16 @@
-import { Color, Shape, Topping } from "@/types/cake";
+import { COLOR, SHAPE, TOPPING } from './cake';
 
 const CREATE_STEPS = [
   {
     label: `appearance`,
+    title: '케이크 모양을 선택해 주세요!',
   },
   {
     label: `decoration`,
+    title: '토핑을 선택해 주세요!',
   },
   {
     label: `letter`,
-  },
-  {
-    label: `complete`,
   },
 ];
 
@@ -19,25 +18,16 @@ const CREATE_STATE = {
   selectedIndex: 0,
   steps: {
     appearance: {
-      valid: false,
-      value: {
-        color: "CHOCLATE" as Color,
-        shape: "CIRCLE" as Shape,
-      },
+      color: COLOR.CHOCOLATE,
+      shape: SHAPE.CIRCLE,
     },
     decoration: {
-      valid: false,
-      value: {
-        topping: "CHERRY" as Topping,
-      },
+      topping: TOPPING.CHERRY,
     },
     letter: {
-      valid: false,
-      value: {
-        sender: "",
-        receiver: "",
-        message: "",
-      },
+      sender: '',
+      receiver: '',
+      message: '',
     },
   },
 };
