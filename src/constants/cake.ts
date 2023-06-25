@@ -7,6 +7,7 @@ export const TYPE = {
 export const COLOR = {
   CHOCOLATE: 'CHOCOLATE',
   BERRY: 'BERRY',
+  CREAM: 'CREAM',
 } as const;
 
 export const SHAPE = {

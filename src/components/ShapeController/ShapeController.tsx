@@ -14,6 +14,8 @@ const getColorByShape = (shape: Shape) => {
       break;
     case SHAPE.HEART:
       color = COLOR.BERRY;
+    case SHAPE.SQUARE:
+      color = COLOR.CREAM;
     default:
       color = COLOR.CHOCOLATE;
   }
