@@ -10,9 +10,9 @@ import styled from '@emotion/styled';
 import GiftBox from '@/components/GiftBox';
 import { useRouter } from 'next/navigation';
 import TopNavigationBar from '@/components/TopNavigationBar';
-import CardService from '@/services/Card.service';
 import { Appearance, Decoration, Letter, Topping } from '@/types/cake';
 import { Cake } from '@/types/cake.type';
+import prisma from '@/utils/prismaClient';
 
 const serializeObjectForServer = ({
   appearance,
@@ -37,13 +37,15 @@ const serializeObjectForServer = ({
   };
 };
 
-const addCake = async (cakeData: Omit<Cake, 'cakeId' | 'createdAt'>) => {
+const addCake = async (data: Omit<Cake, 'cakeId' | 'createdAt'>) => {
   try {
-    const { data }: any = await CardService.createCard(cakeData);
+    const cake = await prisma.cake.create({
+      data,
+    });
 
-    return data;
+    return cake;
   } catch (err) {
-    console.log('err===', err);
+    alert(`에러가 발생했습니다!`);
   }
 };
 
@@ -55,8 +57,7 @@ const Cake = () => {
 
   const handleConfirm = async () => {
     const params = serializeObjectForServer({ ...steps });
-    const { cake } = await addCake(params);
-    const { cakeId } = cake || {};
+    const { cakeId }: any = await addCake(params);
 
     setIsModalOpen(false);
     setShowGift(true);

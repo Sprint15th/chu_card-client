@@ -1,16 +1,16 @@
 import React, { HTMLAttributes, useEffect } from 'react';
-import { GetServerSideProps } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { kakaoClipboard } from 'react-kakao-share';
 import styled from '@emotion/styled';
+import prisma from '@/utils/prismaClient';
 
 import { cakeState } from '@/store/cakeState';
 
 import Meta from '@/components/Metadata';
 import Letter from '@/components/Letter';
 
-import cardService from '@/services/Card.service';
 import type { Cake } from '@/types/cake.type';
 import { CAKE_PATH } from '@/constants/cakePath';
 
@@ -76,13 +76,33 @@ const initializeCreateCakeState = (initialCake: Cake) => ({
   },
 });
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const cake = await cardService.fetchCakeCardDetail(query.id as string);
+export const getServerSideProps = async ({ query, req }: GetServerSidePropsContext) => {
+  const cake = await prisma.cake.findUnique({
+    where: {
+      cakeId: Number(query.id),
+    },
+  });
+
+  if (!cake) {
+    return {
+      redirect: '/',
+    };
+  }
+
+  const data: Cake = {
+    cakeId: `${cake.cakeId}`,
+    color: cake.color as Cake['color'],
+    shape: cake.shape as Cake['shape'],
+    topping: cake.topping as Cake['topping'],
+    sender: cake.sender,
+    receiver: cake.receiver,
+    message: cake.message,
+  };
 
   return {
     props: {
-      initialCake: cake,
-      kakaoShareData: getClipData(cake),
+      initialCake: data,
+      kakaoShareData: getClipData(data),
     },
   };
 };
