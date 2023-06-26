@@ -65,11 +65,7 @@ body {
 .swiper-pagination {
   top: calc(var(--vh, 1vh) * 75) !important;
 
-  @media (min-height: 768px) {
-    top: calc(var(--vh, 1vh) * 65) !important;
-  }
-
-  @media (min-height: 1100px) {
+  @media (min-height: 1080px) {
     top: calc(var(--vh, 1vh) * 60) !important;
   }
 }
