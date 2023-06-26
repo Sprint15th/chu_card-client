@@ -25,8 +25,8 @@ const CREATE_STATE = {
       topping: null,
     },
     letter: {
-      sender: '',
       receiver: '',
+      sender: '',
       message: '',
     },
   },
