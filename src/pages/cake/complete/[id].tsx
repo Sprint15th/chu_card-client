@@ -63,7 +63,7 @@ export default function CakeConfirm({ initialCake, kakaoShareData }: Props) {
                 }}
               />
             </Navigation>
-            <Letter letterData={letterData} imagePath={cakeImagePath} />
+            <Letter letterData={letterData} imagePath={cakeImagePath} isPreview={true} />
             <ButtonContainer>
               <Button onClick={() => kakaoClipboard(kakaoShareData)}>공유하기</Button>
             </ButtonContainer>
