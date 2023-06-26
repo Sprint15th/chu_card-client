@@ -170,7 +170,6 @@ const Button = styled.button`
   padding: 12px;
   background-color: #ffe4d0;
   border-radius: 26px;
-  font-family: Cafe24 Oneprettynight OTF;
   flex: 1;
 `;
 
