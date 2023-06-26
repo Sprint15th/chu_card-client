@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, useEffect, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { kakaoClipboard } from 'react-kakao-share';
 import styled from '@emotion/styled';
 import prisma from '@/utils/prismaClient';
@@ -33,6 +33,7 @@ export default function CakeConfirm({ initialCake, kakaoShareData }: Props) {
   const router = useRouter();
   const setCreateCakeState = useSetRecoilState(cakeState);
   const createCakeState = initializeCreateCakeState(initialCake);
+  const resetCreateCakeState = useResetRecoilState(cakeState);
 
   const letterData = {
     cake: createCakeState.steps,
@@ -55,7 +56,12 @@ export default function CakeConfirm({ initialCake, kakaoShareData }: Props) {
         <React.Fragment>
           <Wrapper>
             <Navigation>
-              <HomeButton onClick={() => router.push('/')} />
+              <HomeButton
+                onClick={() => {
+                  resetCreateCakeState();
+                  router.push('/');
+                }}
+              />
             </Navigation>
             <Letter letterData={letterData} imagePath={cakeImagePath} />
             <ButtonContainer>
