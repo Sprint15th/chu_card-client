@@ -1,8 +1,14 @@
-import { LetterData } from '@/types/letter';
+import { useLayoutEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import autoSize from '@/utils/autoSize';
 import Image from 'next/image';
 import type { StaticImageData } from 'next/image';
+import type { LetterData } from '@/types/letter';
+
+const MAX_MESSAGE_LENGTH = 100;
+const MAX_RECEIVER_LENGTH = 20;
+const MAX_SENDER_LENGTH = 20;
+
 interface LetterProps {
   letterData: LetterData;
   imagePath: string | StaticImageData;
@@ -15,25 +21,44 @@ interface LetterProps {
 const Letter = ({
   letterData,
   imagePath,
+  isPreview = false,
   onChangeMessage = () => {},
   onChangeReceiver = () => {},
   onChangeSender = () => {},
-  isPreview = false,
 }: LetterProps) => {
+  const senderRef = useRef<HTMLInputElement>(null);
+
+  useLayoutEffect(() => {
+    if (senderRef.current) {
+      autoSize(senderRef.current);
+    }
+  }, [letterData.sender]);
+
   return (
     <S.Container>
       <S.Image src={imagePath} alt='cake' width={230} height={230} />
       <S.Letter>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <p>To.</p>
-          <input value={letterData.receiver} onChange={e => onChangeReceiver(e.target.value)} readOnly={isPreview} />
+          <label htmlFor='receiver'>To.</label>
+          <input
+            id='receiver'
+            value={letterData.receiver}
+            style={{ width: '100%' }}
+            onChange={e => {
+              if (e.target.value.length > MAX_RECEIVER_LENGTH) return;
+              onChangeReceiver(e.target.value);
+            }}
+            onFocus={e => isPreview && e.target.blur()}
+            readOnly={isPreview}
+          />
         </div>
         <S.Textarea
           value={letterData.message}
           onChange={e => {
-            if (e.target.value.length > 100) return;
+            if (e.target.value.length > MAX_MESSAGE_LENGTH) return;
             onChangeMessage(e.target.value);
           }}
+          onFocus={e => isPreview && e.target.blur()}
           readOnly={isPreview}
         />
         <div
@@ -45,8 +70,10 @@ const Letter = ({
             padding: '0 10px',
           }}
         >
-          <p>From.</p>
+          <label htmlFor='sender'>From.</label>
           <input
+            id='sender'
+            ref={senderRef}
             value={letterData.sender}
             style={{
               width: '15px',
@@ -54,10 +81,10 @@ const Letter = ({
               textAlign: 'end',
             }}
             onChange={e => {
-              if (e.target.value.length > 20) return;
-              autoSize(e.target);
+              if (e.target.value.length > MAX_SENDER_LENGTH) return;
               onChangeSender(e.target.value);
             }}
+            onFocus={e => isPreview && e.target.blur()}
             readOnly={isPreview}
           />
         </div>
@@ -78,10 +105,6 @@ const S = {
     padding-top: 40px;
     background-image: url('/letter.svg');
     background-size: cover;
-    input {
-      border: none;
-      background-color: inherit;
-    }
 
     @media (min-height: 700px) {
       height: calc(var(--vh, 1vh) * 75);
@@ -113,6 +136,11 @@ const S = {
     height: calc(var(--vh, 1vh) * 40);
     padding: 10px 20px;
     background-color: #fff5f5;
+
+    input {
+      border: none;
+      background-color: inherit;
+    }
 
     @media (min-height: 700px) {
       height: calc(var(--vh, 1vh) * 40);
